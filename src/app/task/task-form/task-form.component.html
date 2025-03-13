@@ -1,0 +1,28 @@
+<div class="container mt-5">
+  @if (taskSelected.id != null) {
+    <h2>Editar Tarea</h2>
+  } @else {
+    <h2>Adicionar tarea</h2>
+  }
+    <form [formGroup]="taskForm" (ngSubmit)="submit()">
+      <!-- Nombre -->
+      <div class="mb-3">
+        <label for="title" class="form-label">Titulo:</label>
+        <input id="title" class="form-control" formControlName="title">
+        <div class="text-danger" *ngIf="taskForm.get('title')?.invalid && taskForm.get('title')?.touched">
+          El titulo es obligatorio.
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label for="description" class="form-label">Descripción:</label>
+        <input id="description" type="description" class="form-control" formControlName="description">
+        <div class="text-danger" *ngIf="taskForm.get('description')?.invalid && taskForm.get('description')?.touched">
+          La descripción es obligatoria.
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-save" [disabled]="taskForm.invalid">Enviar</button>
+      <button type="button" (click)="cancelForm()" class="btn btn-danger">Cancelar</button>
+    </form>
+  </div>
