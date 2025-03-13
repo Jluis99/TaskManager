@@ -28,22 +28,27 @@ export class TaskListComponent implements OnInit {
   showForm = false;
   taskSelected!: Task;
 
+  // Opciones usadas para el filtro.
   statusOptions = [
     { label: 'Todos', value: null },
     { label: 'Completada', value: 1 },
     { label: 'Incompleta', value: 0 }
   ];
+
   constructor(private taskService: TaskService) { }
 
   ngOnInit() {
+    // Valores del breadcrumb
     this.items = [
       { label: 'Lista de tareas' }
     ];
-
     this.home = { icon: 'pi pi-home', routerLink: '/' };
+
+    // Llama al servicio que obtiene la lista de tareas.
     this.getAllTasks();
   }
 
+  // Obtiene la lista de tareas.
   getAllTasks() {
     this.taskService.getAllTasks().subscribe({
       next: (data: Task[]) => {
@@ -55,22 +60,28 @@ export class TaskListComponent implements OnInit {
     })
   }
 
+  // Agrega el valor al breadcrumb y muestra el formulario vacio.
   addTask() {
     this.items?.push({label: "Adicionar tarea"});
     this.resetTaskSelected();
     this.showForm = true;
   }
   
+  // Agrega el valor al breadcrumb y muestra el formulario con los valores de la tarea seleccionada.
   editTask(task: Task) {
     this.items?.push({label: "Editar Task"});
     this.taskSelected = task;
     this.showForm = true;
   }
 
+  // Receptor del componente hijo
   reciveEmitter(emitterTO: EmitterTO) {
+    // Elimina el ultimo elemento del breadcrumb
     this.items?.pop();
     if (emitterTO && !emitterTO.isCancel && emitterTO.task) {
       const task = emitterTO.task;
+      // Se valida si el objeto tiene un id o no. 
+      // Depende de eso es un nuevo registro o una edición de uno existente.
       if (task.id == null) {
         this.saveTask(task);
         this.tasks.push(task);
@@ -81,11 +92,13 @@ export class TaskListComponent implements OnInit {
     this.showForm = false;
   }
 
+  // Método para completar las tareas.
   completeTask(task: Task) {
     task.state = 1;
     this.updateTask(task);
   }
 
+  // Llama al servicio de eliminar y borra del listado el item seleccionado.
   deleteTask(task: Task) {
     if (task && task.id) { 
       this.taskService.deleteTask(task.id).subscribe({
@@ -101,6 +114,7 @@ export class TaskListComponent implements OnInit {
 
   }
 
+  // Llama al servicio de guardado.
   saveTask(task: Task) {
     this.taskService.saveTask(task).subscribe({
       next: (data: Task) => {
@@ -112,6 +126,7 @@ export class TaskListComponent implements OnInit {
     })
   }
 
+  // Llama al servicio de actualizado.
   updateTask(task: Task) {
     if (task && task.id) {
       this.taskService.updateTask(task.id, task).subscribe({
@@ -125,6 +140,7 @@ export class TaskListComponent implements OnInit {
     }
   }
 
+  // Reinicia el objeto de taskSelected.
   resetTaskSelected() {
     this.taskSelected = {
       title: '',

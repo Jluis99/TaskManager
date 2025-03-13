@@ -21,10 +21,10 @@ export class TaskFormComponent implements OnInit {
   };
 
   constructor(private fb: FormBuilder) {
-    
   }
 
   ngOnInit() {
+    // Se inicializa el formulario reactivo con sus validaciones.
     this.taskForm = this.fb.group({
       title: [this.taskSelected?.title ?? '', Validators.required],
       description: [this.taskSelected?.description?? '', [Validators.required]],
@@ -34,6 +34,7 @@ export class TaskFormComponent implements OnInit {
 
 
   submit() {
+    // Valida que el formulario cumpla con las validaciones y realiza el emit al componente padre.
     if (this.taskForm.valid) {
       this.setValues();
       this.emitterTO.task = this.taskSelected;
@@ -45,11 +46,13 @@ export class TaskFormComponent implements OnInit {
     }
   }
 
+  // Setea los valores del formulario al objeto recibido del padre.
   setValues() {
     this.taskSelected.title = this.taskForm.value.title;
     this.taskSelected.description = this.taskForm.value.description;
   }
 
+  // Cancela el formulario para mostrar de nuevo la tabla.
   cancelForm() {
     this.emitterTO.isCancel = true;
     this.taksEmitter.emit(this.emitterTO);
