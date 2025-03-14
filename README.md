@@ -10,5 +10,5 @@
    npm install
 
 3. Ejecutar el proyecto
-```bash
-ng serve
+  ```bash
+  ng serve
