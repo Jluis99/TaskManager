@@ -1,13 +1,14 @@
 # TaskManager
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.2.
+## 📥 Instalación
+1. **Clonar el repositorio**
+   ```bash
+   git clone https://github.com/Jluis99/TaskManager.git
 
-## Development server
+2. Instalar las dependencias
+   ```bash
+   npm install
 
-To start a local development server, run:
-
+3. Ejecutar el proyecto
 ```bash
 ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
